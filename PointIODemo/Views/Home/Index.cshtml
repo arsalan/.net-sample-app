@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "PointIO - Demo Application";
+}
+<h3>PointIO Demo .NET Application</h3>
+<div class="row-fluid" style="padding-top:10px">
+    <h3>@ViewBag.accessRules.Count Access Rule(s)</h3>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Site</th>
+            <th>Type</th>
+            <td>&nbsp;</td>
+        </tr>
+        @foreach (var item in ViewBag.accessRules)
+        {
+            <tr>
+                <td>@item.sharename</td>
+                <td>@item.name</td>
+                <td>@item.sitetypename</td>
+                <td><a href="/Home/Browse/@item.shareid" role="button" class="btn"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Browse</a></td>
+            </tr>
+        }
+    </table>
+</div>
+

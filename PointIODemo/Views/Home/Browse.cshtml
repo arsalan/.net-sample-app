@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "PointIO - Browse";
+}
+
+<div class="row-fluid" style="padding-top:10px">
+    <h3>@ViewBag.folderContent.Count Item(s) in @ViewBag.sharename - @ViewBag.remotepath</h3>
+    <a href="/Home/Browse/@ViewBag.shareid/" class="button" role="button">Back to Root</a> | <a href="/Home" class="button" role="button">Back to Share Listing</a>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in ViewBag.folderContent)
+        {
+            <tr>
+                <td>@item.filename</td>
+                <td>@item.remotepath</td>
+                <td>@item.type</td>
+                <td>
+                    @if (item.type == "DIR")
+                    {
+                        <text><a href="/Home/Browse/@ViewBag.shareid/?remotepath=@item.remotepath&containerid=@item.containerid" role="button" class="btn">Browse</a></text>
+                        
+                    }
+                    else
+                    {
+                        //gotta put in the redirect version of this...
+                        <text><a role="button" class="btn" href="/Home/Download/?folderid=@ViewBag.shareid&containerid=@item.containerid&remotepath=@item.remotepath&fileid=@item.fileid&filename=@item.filename"><span class="glyphicon glyphicon-download"></span>&nbsp;&nbsp;Download</a></text>
+                    }
+                 </td>
+            </tr>
+        }
+    </table>
+
+    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="panel panel-default">
+        <div class="panel-heading">Upload File To Directory</div>
+        <div class="panel-body">
+            
+
+                <input type="hidden" name="remotepath" value="@ViewBag.remotepath" />
+                <input type="hidden" name="containerid" value="@ViewBag.containerid" />
+                <input type="hidden" name="folderid" value="@ViewBag.shareid" />
+
+                <input type='file' name='file' id='file' />
+                <br /><br /><input type="submit" value="submit" />
+
+
+
+
+            
+        </div>
+    </div>
+    }
+
+
+
+   
+</div>
